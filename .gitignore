@@ -59,6 +59,10 @@ transcripts/
 *.log
 logs/
 
+# Uploads and results
+uploads/
+results/
+
 # Environment variables
 .env
 .env.local
