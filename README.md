@@ -3,12 +3,14 @@
 <div align="center">
 
 ![Python](https://img.shields.io/badge/python-v3.8--3.12-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green.svg)
 ![Streamlit](https://img.shields.io/badge/streamlit-v1.28.2-red.svg)
-![Whisper](https://img.shields.io/badge/whisper-OpenAI-green.svg)
+![Whisper](https://img.shields.io/badge/whisper-OpenAI-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
 
 基於 OpenAI Whisper 的網頁版語音轉文字應用程式
+**🚀 現提供 FastAPI + 原生前端 和 Streamlit 兩種版本**
 
 ![應用程式截圖](app-demo.png)
 
@@ -32,6 +34,11 @@
 
 ## ✨ 功能特色
 
+### 🌟 雙版本架構
+- **FastAPI 版本** - 前後端分離，支援 API 調用，異步處理
+- **Streamlit 版本** - 傳統整合式介面，快速啟動
+
+### 🔧 核心功能
 - 🌐 **網頁介面** - 現代化的瀏覽器介面，無需複雜安裝
 - 🤖 **AI 驅動** - 使用 OpenAI Whisper 模型，準確度高
 - 🎯 **多語言支援** - 支援中文、英文、日文、韓文等多種語言
@@ -43,6 +50,13 @@
 - 🎛️ **彈性設定** - 多種 AI 模型可選，平衡速度與準確度
 - 📈 **處理統計** - 顯示字數、字元數和處理時間
 
+### 🚀 FastAPI 版本專屬優勢
+- 🔄 **異步處理** - 可同時處理多個請求
+- 📖 **自動 API 文檔** - Swagger UI + ReDoc
+- 🛡️ **類型安全** - Pydantic 模型驗證
+- 🏗️ **前後端分離** - 更靈活的架構
+- 🌐 **標準 Web 技術** - 易於部署和擴展
+
 ## 💻 系統需求
 
 - **Python**: 3.8-3.12 或更高版本
@@ -53,7 +67,11 @@
 
 ## 🚀 快速開始
 
-### 方法一：自動安裝（推薦）
+> **🎆 新功能**：現提供 FastAPI 和 Streamlit 兩種版本，可依需求選擇！
+
+### 🎆 方法一：FastAPI 版本（🔥 新推薦）
+
+**特色**：前後端分離、API 支援、異步處理、高效能
 
 #### Windows 使用者
 ```bash
@@ -61,11 +79,8 @@
 git clone https://github.com/vincentxuu/whisper-web-transcriber.git
 cd whisper-web-transcriber
 
-# 2. 執行安裝
-./scripts/install.bat
-
-# 3. 啟動應用
-./scripts/start.bat
+# 2. 啟動 FastAPI 版本
+./scripts/start-fastapi.sh
 ```
 
 #### macOS/Linux 使用者
@@ -74,24 +89,48 @@ cd whisper-web-transcriber
 git clone https://github.com/vincentxuu/whisper-web-transcriber.git
 cd whisper-web-transcriber
 
-# 2. 執行安裝
-./scripts/install.sh
+# 2. 啟動 FastAPI 版本
+./scripts/start-fastapi.sh
+```
 
-# 3. 啟動應用
+**完成後訪問**：
+- **主要介面**: http://localhost:8000
+- **API 文檔**: http://localhost:8000/docs
+
+### 🌍 方法二：Streamlit 版本（經典版）
+
+**特色**：簡單易用、快速啟動、適合個人使用
+
+#### Windows 使用者
+```bash
+# 1. 下載專案（如上）
+
+# 2. 啟動 Streamlit 版本
+./scripts/start.bat
+```
+
+#### macOS/Linux 使用者
+```bash
+# 1. 下載專案（如上）
+
+# 2. 啟動 Streamlit 版本
 ./scripts/start.sh
 ```
 
-### 方法二：手動安裝
+**完成後訪問**：http://localhost:8501
+
+### 🛠️ 手動安裝方法
 
 ```bash
 # 1. 安裝 Python 套件
 pip install -r requirements.txt
 
-# 2. 啟動應用
+# 2a. 啟動 FastAPI 版本
+cd backend && python app.py
+
+# 2b. 或啟動 Streamlit 版本
 streamlit run whisper_app.py
 ```
-
-安裝完成後，瀏覽器會自動開啟 `http://localhost:8501`
 
 ## 📱 使用方法
 
@@ -316,17 +355,37 @@ streamlit run whisper_app.py --server.runOnSave true
 
 ```
 whisper-web-transcriber/
-├── whisper_app.py          # 主應用程式
-├── requirements.txt        # 環境依賴
-├── LICENSE                # 授權條款
-├── README.md              # 專案說明
-├── set_permissions.sh     # 權限設定腳本
-├── scripts/               # 輔助腳本
-│   ├── install.bat        # Windows 安裝腳本
-│   ├── start.bat          # Windows 啟動腳本
-│   ├── install.sh         # Unix 安裝腳本
-│   └── start.sh           # Unix 啟動腳本
-└── venv/                  # 虛擬環境
+├── backend/                    # FastAPI 後端
+│   ├── app.py                 # FastAPI 主應用程式
+│   ├── models/                # AI 模型服務
+│   │   ├── __init__.py        
+│   │   └── whisper_service.py 
+│   ├── utils/                 # 工具函數
+│   │   ├── __init__.py        
+│   │   └── file_handler.py    
+│   └── requirements.txt       # 後端依賴
+├── frontend/                   # 原生前端
+│   ├── index.html            # 主頁面
+│   ├── css/
+│   │   └── main.css          # 樣式檔
+│   └── js/
+│       └── app.js            # JavaScript 邏輯
+├── whisper_app.py              # Streamlit 版本主程式
+├── requirements.txt            # Streamlit 版本依賴
+├── uploads/                    # 上傳檔案存放
+├── results/                    # 轉換結果存放
+├── logs/                       # 日誌檔案
+├── scripts/                    # 腳本檔案
+│   ├── install-fastapi.sh     # FastAPI 安裝腳本
+│   ├── start-fastapi.sh       # FastAPI 啟動腳本
+│   ├── install.bat            # Streamlit Windows 安裝
+│   ├── install.sh             # Streamlit Unix 安裝
+│   ├── start.bat              # Streamlit Windows 啟動
+│   └── start.sh               # Streamlit Unix 啟動
+├── LICENSE                     # 授權條款
+├── README.md                   # 專案說明
+├── set_permissions.sh          # 權限設定
+└── venv/                       # Python 虛擬環境
 ```
 
 ### 程式碼風格
@@ -373,6 +432,71 @@ mypy whisper_app.py
 <a href="https://github.com/vincentxuu/whisper-web-transcriber/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=vincentxuu/whisper-web-transcriber" />
 </a>
+
+## 🚀 FastAPI API 文檔
+
+### 主要 API 端點
+
+| 端點 | 方法 | 描述 | 範例 |
+|------|------|------|------|
+| `/api/health` | GET | 健康檢查 | `curl http://localhost:8000/api/health` |
+| `/api/models` | GET | 獲取可用模型列表 | 返回所有 Whisper 模型資訊 |
+| `/api/upload` | POST | 上傳音頻檔案 | 支援多種音頻/視頻格式 |
+| `/api/transcribe` | POST | 開始語音轉文字 | 異步處理，立即返回 |
+| `/api/status/{file_id}` | GET | 查詢處理狀態 | 輪詢處理進度 |
+| `/api/result/{file_id}` | GET | 獲取轉換結果 | 返回文字內容和統計 |
+| `/api/download/{file_id}` | GET | 下載結果檔案 | 下載 .txt 檔案 |
+
+### API 使用範例
+
+#### 1. 上傳檔案
+```bash
+curl -X POST "http://localhost:8000/api/upload" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@audio.mp3"
+```
+
+#### 2. 開始轉換
+```bash
+curl -X POST "http://localhost:8000/api/transcribe" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "file_id": "your-file-id",
+    "model_size": "base",
+    "language": "auto",
+    "include_timestamps": false
+  }'
+```
+
+#### 3. 查詢狀態
+```bash
+curl "http://localhost:8000/api/status/your-file-id"
+```
+
+#### 4. 獲取結果
+```bash
+curl "http://localhost:8000/api/result/your-file-id"
+```
+
+### 🌐 互動式 API 文檔
+
+啟動 FastAPI 版本後，可訪問：
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+### 版本比較
+
+| 功能 | FastAPI 版本 | Streamlit 版本 |
+|------|-------------|----------------|
+| **啟動方式** | `./scripts/start-fastapi.sh` | `./scripts/start.sh` |
+| **訪問地址** | http://localhost:8000 | http://localhost:8501 |
+| **API 支援** | ✅ 完整 REST API | ❌ 無 |
+| **並發處理** | ✅ 異步多請求 | ❌ 單一請求 |
+| **自動文檔** | ✅ Swagger + ReDoc | ❌ 無 |
+| **前端技術** | 原生 HTML/CSS/JS | Streamlit 元件 |
+| **部署難度** | 🟢 標準 Web 應用 | 🟡 需要 Streamlit |
+| **擴展性** | 🟢 易於擴展 | 🟡 受框架限制 |
+| **適用場景** | 生產環境、API 整合 | 快速原型、個人使用 |
 
 ## 📊 專案統計
 
