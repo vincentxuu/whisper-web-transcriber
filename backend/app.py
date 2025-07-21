@@ -6,8 +6,8 @@ from pydantic import BaseModel
 import os
 import uuid
 import logging
-from models.whisper_service import WhisperService
-from utils.file_handler import FileHandler
+from .models.whisper_service import WhisperService
+from .utils.file_handler import FileHandler
 
 # 設置日誌
 logging.basicConfig(level=logging.INFO)
@@ -189,7 +189,7 @@ async def get_result(file_id: str):
                     "text": text_content,
                     "processing_time": status.get("processing_time", 0)
                 },
-                "word_count": len(text_content.split()),
+                "word_count": len([c for c in text_content if c.strip() and not c.isspace()]),
                 "char_count": len(text_content),
                 "processing_time": status.get("processing_time", 0)
             })

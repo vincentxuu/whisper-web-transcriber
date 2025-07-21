@@ -127,12 +127,9 @@ echo "按 Ctrl+C 可以停止應用程式"
 echo "========================================"
 echo
 
-# 切換到 backend 目錄
-cd backend
-
-# 設置環境變數
-export UPLOAD_DIR="../uploads"
-export RESULT_DIR="../results"
+# 設置環境變數 (從專案根目錄設置)
+export UPLOAD_DIR="uploads"
+export RESULT_DIR="results"
 export LOG_LEVEL="info"
 
 # 使用陷阱處理中斷信號
@@ -141,8 +138,8 @@ trap 'echo -e "\n正在停止服務..."; kill $UVICORN_PID 2>/dev/null; exit 0' 
 # 啟動 FastAPI 應用
 echo "🔄 正在啟動服務..."
 
-# 使用 uvicorn 啟動應用
-uvicorn app:app \
+# 使用 uvicorn 啟動應用 (從根目錄運行，指定 backend 模組)
+uvicorn backend.app:app \
     --host 0.0.0.0 \
     --port 8000 \
     --reload \
